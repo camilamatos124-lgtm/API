@@ -1,17 +1,19 @@
-import swaggerJSDoc from 'swagger-jsdoc';
-
-const options = {
+const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
       title: "API Rave Party",
       version: "1.0.0",
-      description: "Documentação da API de Salas e Playlists com Swagger "
-    }
+      description: "Documentação da API de Salas e Playlists com Swagger",
+    },
+    servers: [
+      {
+        url: "https://api-ir0g.onrender.com/api",
+        description: "Servidor do Render"
+      }
+    ]
   },
-  // Aqui avisamos onde estão os arquivos com as rotas para ele ler
-  apis: ["./src/routes/*.js"], 
+  apis: ["./src/routes/*.js"], // Caminho para encontrar seus comentários
 };
 
-const swaggerSpec = swaggerJSDoc(options);
-export default swaggerSpec; // [cite: 66]
+export default swaggerOptions;
