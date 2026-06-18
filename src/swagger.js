@@ -1,3 +1,5 @@
+import swaggerJSDoc from 'swagger-jsdoc';
+
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
@@ -9,11 +11,16 @@ const swaggerOptions = {
     servers: [
       {
         url: "https://api-ir0g.onrender.com/api",
-        description: "Servidor do Render"
+        description: "Servidor de Produção (Render)"
       }
     ]
   },
-  apis: ["./src/routes/*.js"], // Caminho para encontrar seus comentários
+  // Aponta para as rotas onde estão os comentários que o Swagger vai ler
+  apis: ["./src/routes/*.js"], 
 };
 
-export default swaggerOptions;
+// Gera a especificação final combinando as opções acima
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
+// Exporta apenas o swaggerSpec (um único export padrão para o arquivo)
+export default swaggerSpec;
