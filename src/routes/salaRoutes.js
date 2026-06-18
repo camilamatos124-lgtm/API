@@ -1,37 +1,51 @@
-import express from 'express';
-import SalaController from '../controllers/salaController.js';
-import { regrasValidacaoSala } from '../validators/salaValidator.js';
-import { verificarErros } from '../middlewares/validatorMiddleware.js';
-
-// Importando APENAS o segurança que você tem!
-import { checkRole } from '../middlewares/permissionsMiddleware.js';
+import express from "express";
+import SalaController from "../controllers/salaController.js";
+import { regrasValidacaoSala } from "../validators/salaValidator.js";
+import { verificarErros } from "../middlewares/validatorMiddleware.js";
+import { checkRole } from "../middlewares/permissionsMiddleware.js";
 
 const router = express.Router();
 
-// ROTA GET: Chamadas normais
-router.get('/', SalaController.listarSalas);
-router.get('/view', SalaController.renderizarTelaSalas);
-router.get('/:id', SalaController.buscarSalaPorId);
+/**
+ * @swagger
+ * /salas:
+ *  get:
+ *    summary: Retorna a lista de todas as salas
+ *    responses:
+ *      200:
+ *        description: Lista de salas retornada com sucesso
+ */
+router.get("/", SalaController.listarSalas);
+router.get("/view", SalaController.renderizarTelaSalas);
+router.get("/:id", SalaController.buscarSalaPorId);
 
-// ROTA POST: Esteira de produção protegida com o seu checkRole
+/**
+ * @swagger
+ * /salas:
+ *  post:
+ *    summary: Cria uma nova sala (Requer permissão de admin)
+ *    parameters:
+ *      - in: header
+ *        name: role
+ *        required: true
+ *        schema:
+ *        type: string
+ *        description: Digite 'admin' para ter permissão
+ *    responses:
+ *      201:
+ *        description: Sala criada com sucesso
+ *      403:
+ *        description: Acesso proibido
+ */
 router.post(
-  '/',
-  checkRole(['admin']),   // Proteção RBAC
-  regrasValidacaoSala,    // Validação dos dados
-  verificarErros,         // Middleware que barra se tiver erro
+  "/",
+  checkRole(["admin"]), 
+  regrasValidacaoSala, 
+  verificarErros, 
   SalaController.criarSala
 );
 
-// ATUALIZAR: Protegida para ADMINS
-router.put(
-  '/:id', 
-  checkRole(['admin']),
-  regrasValidacaoSala, 
-  verificarErros, 
-  SalaController.atualizarSala
-);
-
-// DELETAR: Protegida para ADMINS
-router.delete('/:id', checkRole(['admin']), SalaController.deletarSala);
+router.put("/:id", checkRole(["admin"]), regrasValidacaoSala, verificarErros, SalaController.atualizarSala);
+router.delete("/:id", checkRole(["admin"]), SalaController.deletarSala);
 
 export default router;

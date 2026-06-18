@@ -5,6 +5,8 @@ import playlistRoutes from './routes/playlistRoutes.js';
 import { globalErrorHandler } from './middlewares/errorMiddleware.js';
 import 'dotenv/config'; // Deve ser a primeira coisa a carregar!
 import connectDB from './config/db.js'; // Ajuste o caminho se necessário
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swagger.js';
 
 // Conecta ao MongoDB antes de iniciar as rotas
 connectDB();
@@ -27,6 +29,7 @@ const meuLog = (req, res, next) => {
 app.use(meuLog);
 
 // 3. Definição das Rotas
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/salas', salaRoutes);
 app.use('/api/playlist', playlistRoutes);
 
