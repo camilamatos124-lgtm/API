@@ -29,8 +29,13 @@ const meuLog = (req, res, next) => {
 app.use(meuLog);
 
 // 3. Definição das Rotas
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use('/api/salas', salaRoutes);
+// Altere a linha do seu app.use('/api-docs') para isso:
+const swaggerOptions = {
+  customCssUrl: 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/themes/theme-monokai.css',
+  customSiteTitle: "Rave Party API Docs"
+};
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));app.use('/api/salas', salaRoutes);
 app.use('/api/playlist', playlistRoutes);
 
 // 4. MIDDLEWARE GLOBAL DE ERROS - SEMPRE DEPOIS DAS ROTAS!
