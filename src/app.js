@@ -35,7 +35,8 @@ const swaggerOptions = {
   customSiteTitle: "Rave Party API Docs"
 };
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));app.use('/api/salas', salaRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));
+app.use('/api/salas', salaRoutes);
 app.use('/api/playlist', playlistRoutes);
 
 // 4. MIDDLEWARE GLOBAL DE ERROS - SEMPRE DEPOIS DAS ROTAS!
