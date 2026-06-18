@@ -7,4 +7,6 @@ const salaSchema = new mongoose.Schema({
   ativa: { type: Boolean, default: true }
 }, { timestamps: true });
 
-export default mongoose.model("Sala", salaSchema);
+const Playlist = mongoose.models.Playlist || mongoose.model('Playlist', playlistSchema);
+
+export default Playlist;
