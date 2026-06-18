@@ -1,0 +1,30 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Nossas Salas
+    link(rel="stylesheet", href="/css/style.css")
+  
+  body
+    h1 🎥 Salas de Transmissão
+
+    div.container
+      if salas.length > 0
+        each sala in salas
+          div.card
+            h3= sala.nome
+            p 
+              strong Descrição: 
+              = sala.descricao
+            p 
+              strong Status: 
+              //- O MongoDB salva como booleano (true/false)
+              if sala.ativa
+                span.status.ativa Ativa
+              else
+                span.status.inativa Inativa
+            //- Dica: Se quiser mostrar o ID técnico para conferência:
+            small ID: #{sala._id}
+      else
+        p.empty-msg Nenhuma sala cadastrada no momento.

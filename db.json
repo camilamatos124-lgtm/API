@@ -1,0 +1,22 @@
+{
+  "salas": [
+    {
+      "id": 1778733297233,
+      "nome": "Sala de Jazz",
+      "status": "ativa"
+    },
+    {
+      "id": 1778735510740,
+      "nome": "Sala de Estudos Node.js",
+      "status": "ativa"
+    }
+  ],
+  "playlists": [
+    {
+      "id": 1778735913297,
+      "salaId": 1778733297233,
+      "titulo": "Entendendo APIs",
+      "url": "https://youtube.com/watch?v=123"
+    }
+  ]
+}

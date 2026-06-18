@@ -1,0 +1,37 @@
+import express from 'express';
+import path from 'path'; // <--- Importe o path do Node.js
+import salaRoutes from './routes/salaRoutes.js';
+import playlistRoutes from './routes/playlistRoutes.js';
+import { globalErrorHandler } from './middlewares/errorMiddleware.js';
+import 'dotenv/config'; // Deve ser a primeira coisa a carregar!
+import connectDB from './config/db.js'; // Ajuste o caminho se necessário
+
+// Conecta ao MongoDB antes de iniciar as rotas
+connectDB();
+const app = express();
+
+// --- CONFIGURAÇÕES DO PUG E ARQUIVOS ESTÁTICOS ---
+app.set('view engine', 'pug'); // Define o Pug como motor de telas
+app.set('views', path.resolve('./src/views')); // Diz onde as telas vão ficar
+app.use(express.static('public')); // Diz onde ficará o CSS e Imagens
+// --------------------------------------------------
+
+app.use(express.json());
+
+// 2. Middlewares Globais (Logs, etc) - SEMPRE ANTES DAS ROTAS
+const meuLog = (req, res, next) => {
+  const data = new Date().toISOString();
+  console.log(`[${data}] ${req.method} em ${req.url}`);
+  next(); 
+};
+app.use(meuLog);
+
+// 3. Definição das Rotas
+app.use('/api/salas', salaRoutes);
+app.use('/api/playlist', playlistRoutes);
+
+// 4. MIDDLEWARE GLOBAL DE ERROS - SEMPRE DEPOIS DAS ROTAS!
+// Se alguma rota fizer um "next(error)", cai direto aqui
+app.use(globalErrorHandler);
+
+export default app;
