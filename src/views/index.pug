@@ -38,11 +38,6 @@ html(lang="pt-BR")
         text-shadow: 0 0 5px #ff007f;
         margin-bottom: 30px;
       }
-      .btn-group {
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-      }
       .btn {
         display: inline-block;
         padding: 12px 30px;
@@ -51,23 +46,11 @@ html(lang="pt-BR")
         text-decoration: none;
         font-weight: bold;
         transition: all 0.3s ease;
-      }
-      .btn-swagger {
-        color: #00f3ff;
-        border: 2px solid #00f3ff;
-        box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
-      }
-      .btn-swagger:hover {
-        background: #00f3ff;
-        color: #0d0e15;
-        box-shadow: 0 0 25px #00f3ff;
-      }
-      .btn-salas {
         color: #ff007f;
         border: 2px solid #ff007f;
         box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
       }
-      .btn-salas:hover {
+      .btn:hover {
         background: #ff007f;
         color: #fff;
         box-shadow: 0 0 25px #ff007f;
@@ -76,6 +59,4 @@ html(lang="pt-BR")
     .container
       h1 🎧 API Rave Party ⚡
       p Sistema de Gerenciamento de Ambientes e Playlists
-      .btn-group
-        a.btn.btn-salas(href="/salas") 🏛️ Ver Salas Ativas (Visual Pug)
-        a.btn.btn-swagger(href="/api-docs") 🛠️ Documentação Técnica (Swagger)
+      a.btn(href="/salas") 🏛️ Entrar no Painel de Salas

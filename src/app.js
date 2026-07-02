@@ -27,16 +27,18 @@ app.get('/', (req, res) => {
 
 // Rota Visual para listar as salas usando o arquivo salas.pug
 
+// Rota Visual para listar as salas usando o arquivo salas.pug
 app.get('/salas', async (req, res, next) => {
   try {
-    // Buscamos as salas direto do banco de dados para renderizar na tela
-    const db = await connectDB(); 
-    const salas = await db.collection('salas').find().toArray();
+    // Vamos consumir a sua própria API que já está funcionando!
+    const response = await fetch('https://api-ir0g.onrender.com/api/salas');
+    const salas = await response.json();
     
-    // Renderiza o arquivo salas.pug enviando a lista encontrada
+    // Renderiza o arquivo salas.pug enviando a lista
     res.render('salas', { salas });
   } catch (error) {
-    next(error);
+    console.error("Erro ao buscar salas da API:", error);
+    res.render('salas', { salas: [] }); // Se der erro, mostra tela vazia em vez de quebrar
   }
 });
 
