@@ -20,6 +20,26 @@ app.use(express.static('public')); // Diz onde ficará o CSS e Imagens
 
 app.use(express.json());
 
+// Rota para carregar a página inicial bonita do Pug
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+// Rota Visual para listar as salas usando o arquivo salas.pug
+
+app.get('/salas', async (req, res, next) => {
+  try {
+    // Buscamos as salas direto do banco de dados para renderizar na tela
+    const db = await connectDB(); 
+    const salas = await db.collection('salas').find().toArray();
+    
+    // Renderiza o arquivo salas.pug enviando a lista encontrada
+    res.render('salas', { salas });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // 2. Middlewares Globais (Logs, etc) - SEMPRE ANTES DAS ROTAS
 const meuLog = (req, res, next) => {
   const data = new Date().toISOString();

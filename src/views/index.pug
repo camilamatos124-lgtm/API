@@ -1,0 +1,81 @@
+doctype html
+html(lang="pt-BR")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title API Rave Party
+    style.
+      body {
+        background-color: #0d0e15;
+        color: #fff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        text-align: center;
+        border: 2px solid #00f3ff;
+        padding: 40px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.03);
+        box-shadow: 0 0 20px #00f3ff, inset 0 0 10px #00f3ff;
+      }
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        color: #00f3ff;
+        text-shadow: 0 0 10px #00f3ff;
+      }
+      p {
+        font-size: 1.2rem;
+        color: #ff007f;
+        text-shadow: 0 0 5px #ff007f;
+        margin-bottom: 30px;
+      }
+      .btn-group {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+      }
+      .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        background: transparent;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+      }
+      .btn-swagger {
+        color: #00f3ff;
+        border: 2px solid #00f3ff;
+        box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+      }
+      .btn-swagger:hover {
+        background: #00f3ff;
+        color: #0d0e15;
+        box-shadow: 0 0 25px #00f3ff;
+      }
+      .btn-salas {
+        color: #ff007f;
+        border: 2px solid #ff007f;
+        box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+      }
+      .btn-salas:hover {
+        background: #ff007f;
+        color: #fff;
+        box-shadow: 0 0 25px #ff007f;
+      }
+  body
+    .container
+      h1 🎧 API Rave Party ⚡
+      p Sistema de Gerenciamento de Ambientes e Playlists
+      .btn-group
+        a.btn.btn-salas(href="/salas") 🏛️ Ver Salas Ativas (Visual Pug)
+        a.btn.btn-swagger(href="/api-docs") 🛠️ Documentação Técnica (Swagger)
