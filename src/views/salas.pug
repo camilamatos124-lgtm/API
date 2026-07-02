@@ -4,93 +4,241 @@ html(lang="pt-BR")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title Painel de Salas - Rave Party
+    link(rel="preconnect" href="https://fonts.googleapis.com")
+    link(href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet")
     style.
+      :root {
+        --bg: #0a0b12;
+        --panel: rgba(0, 243, 255, 0.045);
+        --cyan: #00f3ff;
+        --magenta: #ff2d95;
+        --acid: #d4ff00;
+        --text: #f2f2f7;
+        --text-dim: #7d7d92;
+        --border: rgba(0, 243, 255, 0.35);
+        --mono: 'IBM Plex Mono', monospace;
+        --display: 'Unbounded', sans-serif;
+        --body: 'Inter', system-ui, sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+
       body {
-        background-color: #0d0e15;
-        color: #fff;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        padding: 40px;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--body);
         margin: 0;
+        padding: 48px 24px 80px;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
       }
-      .header {
-        text-align: center;
-        margin-bottom: 50px;
+
+      /* piso de pista sutil no fundo */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 243, 255, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 243, 255, 0.06) 1px, transparent 1px);
+        background-size: 48px 48px;
+        transform: perspective(600px) rotateX(60deg);
+        transform-origin: bottom;
+        height: 60vh;
+        bottom: 0;
+        top: auto;
+        opacity: 0.5;
+        pointer-events: none;
+        z-index: 0;
       }
-      h1 {
-        color: #00f3ff;
-        text-shadow: 0 0 15px #00f3ff;
-        font-size: 2.5rem;
-        text-transform: uppercase;
+
+      .wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+
+      .header { text-align: center; margin-bottom: 56px; }
+
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 0.75rem;
         letter-spacing: 3px;
-        margin-bottom: 5px;
+        color: var(--text-dim);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 18px;
       }
+      .eyebrow .dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: var(--acid);
+        box-shadow: 0 0 8px var(--acid);
+        animation: pulse 1.6s ease-in-out infinite;
+      }
+
+      h1 {
+        font-family: var(--display);
+        font-weight: 900;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 0 0 10px;
+        color: var(--cyan);
+        text-shadow: 2px 0 var(--magenta), -2px 0 var(--cyan), 0 0 24px rgba(0, 243, 255, 0.4);
+      }
+
       .subtitle {
-        color: #ff007f;
-        font-size: 1.2rem;
-        text-shadow: 0 0 5px #ff007f;
+        font-family: var(--mono);
+        color: var(--magenta);
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
       }
+
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-        max-width: 1200px;
-        margin: 0 auto;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 22px;
       }
+
       .card {
-        border: 2px solid #00f3ff;
-        padding: 25px;
-        border-radius: 12px;
-        background: rgba(0, 243, 255, 0.05);
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 22px;
+        background: var(--panel);
+        position: relative;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
       }
       .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0 25px #00f3ff;
-        background: rgba(0, 243, 255, 0.1);
+        transform: translateY(-4px);
+        border-color: var(--magenta);
+        box-shadow: 0 0 28px rgba(255, 45, 149, 0.25);
       }
+
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .channel {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        color: var(--text-dim);
+        letter-spacing: 1px;
+      }
+      .live {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 1.5px;
+        color: var(--acid);
+      }
+      .eq {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        height: 12px;
+      }
+      .eq span {
+        width: 3px;
+        background: var(--acid);
+        animation: eq 0.9s ease-in-out infinite;
+      }
+      .eq span:nth-child(1) { animation-delay: -0.6s; }
+      .eq span:nth-child(2) { animation-delay: -0.3s; }
+      .eq span:nth-child(3) { animation-delay: -0.9s; }
+      .eq span:nth-child(4) { animation-delay: -0.15s; }
+
       .card h2 {
-        color: #ff007f;
-        margin-top: 0;
-        font-size: 1.8rem;
-        text-shadow: 0 0 8px rgba(255, 0, 127, 0.5);
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: var(--text);
+        margin: 0 0 6px;
+        line-height: 1.2;
       }
-      .card p {
-        font-size: 0.9rem;
-        color: #aaa;
+      .card .id {
+        font-family: var(--mono);
+        font-size: 0.75rem;
+        color: var(--text-dim);
         word-break: break-all;
       }
-      .back-link {
-        display: block;
+      .card .id::before { content: "ID // "; color: var(--cyan); }
+
+      .empty {
+        grid-column: 1 / -1;
         text-align: center;
-        margin-top: 60px;
-        color: #fff;
+        padding: 60px 20px;
+        font-family: var(--mono);
+        color: var(--text-dim);
+        border: 1px dashed var(--border);
+        border-radius: 4px;
+      }
+      .empty .flag { color: var(--magenta); display: block; margin-bottom: 8px; letter-spacing: 2px; }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 64px auto 0;
+        justify-content: center;
+        width: fit-content;
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        color: var(--text);
         text-decoration: none;
-        font-weight: bold;
+        border: 1px solid var(--text-dim);
         padding: 10px 20px;
-        border: 1px solid #fff;
-        border-radius: 5px;
-        width: 200px;
-        margin-left: auto;
-        margin-right: auto;
-        transition: 0.3s;
+        border-radius: 3px;
+        transition: 0.25s;
       }
       .back-link:hover {
-        background: #fff;
-        color: #0d0e15;
+        border-color: var(--cyan);
+        color: var(--cyan);
+        box-shadow: 0 0 14px rgba(0, 243, 255, 0.3);
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+      }
+      @keyframes eq {
+        0%, 100% { height: 3px; }
+        50% { height: 12px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .eyebrow .dot, .eq span { animation: none; }
       }
   body
-    .header
-      h1 🎛️ Ambientes Ativos
-      p.subtitle Monitoramento em tempo real das salas da festa
-    
-    .grid
-      if salas && salas.length > 0
-        each sala in salas
-          .card
-            h2 🎧 #{sala.nome}
-            p 🆔 ID: #{sala._id || sala.id}
-      else
-        p(style="grid-column: 1/-1; text-align: center; color: #ff007f; font-size: 1.5rem;") 🚫 Nenhuma sala cadastrada no momento.
-    
-    a.back-link(href="/") ← Voltar ao Início
+    .wrap
+      .header
+        span.eyebrow
+          span.dot
+          | SISTEMA DE MONITORAMENTO · SALAS
+        h1 Ambientes Ativos
+        p.subtitle Monitoramento em tempo real das salas da festa
+
+      .grid
+        if salas && salas.length > 0
+          each sala, i in salas
+            .card
+              .card-top
+                span.channel CH-#{String(i + 1).padStart(2, '0')}
+                span.live
+                  .eq
+                    span
+                    span
+                    span
+                    span
+                  | AO VIVO
+              h2 #{sala.nome}
+              p.id= sala._id || sala.id
+        else
+          .empty
+            span.flag ▲ SEM SINAL
+            | Nenhuma sala cadastrada no momento.
+
+      a.back-link(href="/")
+        | ← voltar ao início

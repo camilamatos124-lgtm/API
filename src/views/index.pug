@@ -4,59 +4,138 @@ html(lang="pt-BR")
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
     title API Rave Party
+    link(rel="preconnect" href="https://fonts.googleapis.com")
+    link(href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet")
     style.
+      :root {
+        --bg: #0a0b12;
+        --cyan: #00f3ff;
+        --magenta: #ff2d95;
+        --acid: #d4ff00;
+        --text: #f2f2f7;
+        --text-dim: #7d7d92;
+        --mono: 'IBM Plex Mono', monospace;
+        --display: 'Unbounded', sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+
       body {
-        background-color: #0d0e15;
-        color: #fff;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--mono);
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        min-height: 100vh;
         margin: 0;
+        position: relative;
+        overflow: hidden;
       }
-      .container {
+
+      /* scanlines sutis, estilo tela de sistema/CRT */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.02) 0px,
+          rgba(255, 255, 255, 0.02) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+        pointer-events: none;
+      }
+
+      .panel {
+        position: relative;
         text-align: center;
-        border: 2px solid #00f3ff;
-        padding: 40px;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.03);
-        box-shadow: 0 0 20px #00f3ff, inset 0 0 10px #00f3ff;
+        padding: 56px 60px;
+        border: 1px solid rgba(0, 243, 255, 0.4);
+        border-radius: 4px;
+        background: rgba(0, 243, 255, 0.03);
+        box-shadow: 0 0 30px rgba(0, 243, 255, 0.15), inset 0 0 20px rgba(0, 243, 255, 0.05);
       }
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 10px;
-        text-transform: uppercase;
-        letter-spacing: 4px;
-        color: #00f3ff;
-        text-shadow: 0 0 10px #00f3ff;
+
+      /* cantos estilo interface tática */
+      .panel::before, .panel::after {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--magenta);
       }
-      p {
-        font-size: 1.2rem;
-        color: #ff007f;
-        text-shadow: 0 0 5px #ff007f;
-        margin-bottom: 30px;
+      .panel::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+      .panel::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+      .eyebrow {
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        color: var(--text-dim);
       }
-      .btn {
+      .eyebrow .cursor {
         display: inline-block;
-        padding: 12px 30px;
+        width: 7px;
+        height: 12px;
+        background: var(--acid);
+        margin-left: 4px;
+        vertical-align: middle;
+        animation: blink 1s step-end infinite;
+      }
+
+      h1 {
+        font-family: var(--display);
+        font-weight: 900;
+        font-size: clamp(2rem, 6vw, 3rem);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        color: var(--cyan);
+        text-shadow: 2px 0 var(--magenta), -2px 0 var(--cyan), 0 0 24px rgba(0, 243, 255, 0.4);
+        margin: 18px 0 12px;
+      }
+
+      p.subtitle {
+        color: var(--magenta);
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+        margin: 0 0 36px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 32px;
         background: transparent;
-        border-radius: 5px;
+        border-radius: 3px;
         text-decoration: none;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        color: #ff007f;
-        border: 2px solid #ff007f;
-        box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+        font-weight: 500;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        color: var(--acid);
+        border: 1px solid var(--acid);
+        transition: 0.25s ease;
       }
       .btn:hover {
-        background: #ff007f;
-        color: #fff;
-        box-shadow: 0 0 25px #ff007f;
+        background: var(--acid);
+        color: var(--bg);
+        box-shadow: 0 0 26px var(--acid);
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .eyebrow .cursor { animation: none; }
       }
   body
-    .container
-      h1 🎧 API Rave Party ⚡
-      p Sistema de Gerenciamento de Ambientes e Playlists
-      a.btn(href="/salas") 🏛️ Entrar no Painel de Salas
+    .panel
+      p.eyebrow
+        | SISTEMA · RAVE_PARTY_API
+        span.cursor
+      h1 API Rave Party
+      p.subtitle Sistema de gerenciamento de ambientes e playlists
+      a.btn(href="/salas") → entrar no painel de salas
